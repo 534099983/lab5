@@ -22,7 +22,7 @@ public class GamePlay extends GamePlayDomainModel {
 	public GamePlay(Rule rle)
 	{
 		this.setGameID(UUID.randomUUID());
-		this.setNbrOfCards(rle.GetNumberOfCards());
+		this.setNbrOfCards(rle.GetPlayerNumberOfCards());
 		this.setMaxNbrOfPlayers(rle.GetMaxNumberOfPlayers());
 		this.setNbrOfJokers(rle.GetNumberOfJokers());
 		this.setWildCards(rle.GetRuleCards());
@@ -63,10 +63,25 @@ public class GamePlay extends GamePlayDomainModel {
 	{
 		GameCommonHand.add(GPCH);
 	}
+
+	public GamePlayPlayerHand FindCommonHand(GamePlay gme)
+	{
+		GamePlayPlayerHand GPCH = null;
+		for (GamePlayPlayerHand GPPH: GameCommonHand)
+		{
+			if (GPPH.getGame().getGameID() == gme.getGameID())
+			{
+				GPCH = GPPH;
+			}
+		}		
+		return GPCH;
+	}
+	
 	public GamePlayPlayerHand FindPlayerGame(GamePlay gme, Player p)
 	{
 		GamePlayPlayerHand GPPHReturn = null;
 		
+	
 		for (GamePlayPlayerHand GPPH: GamePlayerHand)
 		{
 			if (p.getiPlayerPosition() == GPPH.getPlayer().getiPlayerPosition())
